@@ -14,6 +14,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
 
+//go:build cgo
+// +build cgo
+
 package bls
 
 import "testing"
@@ -21,6 +24,12 @@ import "testing"
 func FuzzCrossPairing(f *testing.F) {
 	f.Fuzz(func(t *testing.T, data []byte) {
 		fuzzCrossPairing(data)
+	})
+}
+
+func FuzzCrossG2MultiExp(f *testing.F) {
+	f.Fuzz(func(t *testing.T, data []byte) {
+		fuzzCrossG2MultiExp(data)
 	})
 }
 
@@ -48,9 +57,9 @@ func FuzzG1Add(f *testing.F) {
 	})
 }
 
-func FuzzG1Mul(f *testing.F) {
+func FuzzCrossG1Mul(f *testing.F) {
 	f.Fuzz(func(t *testing.T, data []byte) {
-		fuzz(blsG1Mul, data)
+		fuzzCrossG1Mul(data)
 	})
 }
 
@@ -66,9 +75,9 @@ func FuzzG2Add(f *testing.F) {
 	})
 }
 
-func FuzzG2Mul(f *testing.F) {
+func FuzzCrossG2Mul(f *testing.F) {
 	f.Fuzz(func(t *testing.T, data []byte) {
-		fuzz(blsG2Mul, data)
+		fuzzCrossG2Mul(data)
 	})
 }
 
@@ -93,5 +102,29 @@ func FuzzMapG1(f *testing.F) {
 func FuzzMapG2(f *testing.F) {
 	f.Fuzz(func(t *testing.T, data []byte) {
 		fuzz(blsMapG2, data)
+	})
+}
+
+func FuzzG1SubgroupChecks(f *testing.F) {
+	f.Fuzz(func(t *testing.T, data []byte) {
+		fuzzG1SubgroupChecks(data)
+	})
+}
+
+func FuzzG2SubgroupChecks(f *testing.F) {
+	f.Fuzz(func(t *testing.T, data []byte) {
+		fuzzG2SubgroupChecks(data)
+	})
+}
+
+func FuzzG2Mul(f *testing.F) {
+	f.Fuzz(func(t *testing.T, data []byte) {
+		fuzz(blsG2Mul, data)
+	})
+}
+
+func FuzzG1Mul(f *testing.F) {
+	f.Fuzz(func(t *testing.T, data []byte) {
+		fuzz(blsG1Mul, data)
 	})
 }
